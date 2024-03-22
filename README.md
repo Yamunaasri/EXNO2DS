@@ -22,10 +22,11 @@ STEP 7: Use cross tabulation method to quantitatively analyze the relationship b
 
 STEP 8: Use heatmap method of representation to show relationships between two variables, one plotted on each axis.
 
-## CODING AND OUTPUT
+## CODING AND OUTPUT:
+
 ```
-NAME : T S YAMUNAASRI
-REG NO : 212222240117
+Name: Yamunaasri T S
+Register Number: 212222240117
 ```
 ```
 import numpy as np
@@ -33,53 +34,96 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-df = pd.read_csv("/content/titanic_dataset.csv")
-df
+df=pd.read_csv("/content/titanic_dataset.csv")
+print(df)
 ```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/1cb6a3c2-864c-496e-a5b4-2797c637e447)
+![Screenshot 2024-03-15 094409](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/d068afbe-1818-483d-b7f5-4d6f3fde42c8)
+
 ```
 df.info()
 ```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/3fee0f6c-ce62-4b50-9b95-78be830f91a2)
-```
-df.set_index("PassengerId",inplace = True)
-df.describe()
-```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/747efdfe-426d-4e6c-a72f-90c2d393630b)
+![Screenshot 2024-03-15 094457](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/5cd24cf1-5ebe-4037-99f9-634c1d15ceac)
+
 ```
 df.shape
 ```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/3c7dac15-4774-47f0-a564-a3a00f524698)
+![Screenshot 2024-03-15 094625](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/aeb29c85-fb55-4ddc-a4d3-1062e43d44c0)
+
 ```
 df.nunique()
 ```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/4e598c9c-8748-4aab-b285-a1a8672fea60)
-```
-### CATEGORICAL DATA ANALYSIS
+![Screenshot 2024-03-15 094708](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/0851cc7a-aa10-450d-a7a3-703de236c564)
+
 ```
 df["Survived"].value_counts()
-per = (df['Survived'].value_counts()/df.shape[0]*100).round(2)
+per=(df["Survived"].value_counts()/df.shape[0]*100).round(2)
 per
 ```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/07f72523-9dc5-47c0-bd62-4b3e4510b0f9)
+![Screenshot 2024-03-15 095023](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/cc1261e3-4a01-48a4-a08d-ddac63b1f660)
+
 ```
-### UNIVARIATE ANALYSIS
+sns.countplot(data=df,x='Survived')
+df.Pclass.unique()
 ```
-sns.countplot(data=df,x="Survived")
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/c52edcf3-dfb6-44be-aee2-d93b54b9679c)
+
 ```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/904c261c-85fb-4c8e-a97e-cf9deeefe090)
+df.rename(columns={'Sex':'Gender'},inplace=True)
+df
 ```
-### BIVARIATE ANALYSIS
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/11acd9c7-4683-4ca8-a589-4f044cebe7e0)
+
 ```
-fig, ax1 = plt.subplots(figsize=(5,5))
-graph=sns.countplot(ax=ax1,x= 'Survived', data=df)
-graph.set_xticklabels (graph.get_xticklabels (), rotation=90)
-for p in graph.patches:
-  height = p.get_height()
-  graph.text(p.get_x()+p.get_width()/2., height + 0.1, height,ha="center")
+sns.catplot(x="Gender",col="Survived",kind="count",data=df,height=5,aspect=.7)
 ```
-![image](https://github.com/Yamunaasri/EXNO2DS/assets/115707860/c0d268af-de9d-45aa-9d1b-ef12127d8425)
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/9bcab15a-a8aa-47ca-8763-26cb318df40e)
+
+```
+sns.catplot(x='Survived',hue="Gender",data=df,kind="count")
 ```
 
-# RESULT
-Thus, the outputs verifies that the data set has been applied the EDA process and methods,
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/e8987583-06b3-4b3d-9089-097dc078e957)
+
+```
+df.boxplot(column="Age",by="Survived")
+```
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/b3ad2f91-20d2-4980-8e56-9b0358337451)
+
+```
+sns.scatterplot(x=df["Age"],y=df["Fare"])
+```
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/06690dc7-a353-44d7-9f3e-975880daa2a4)
+
+```
+sns.jointplot(x=df["Age"],y=df["Fare"],data=df)
+```
+
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/1a818b6e-dbc1-48e4-b388-6edb554f37cb)
+
+```
+fig,ax1=plt.subplots(figsize=(8,5))
+pt=sns.boxplot(ax=ax1,x='Pclass',y='Age',hue='Gender',data=df)
+```
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/8097795f-1c6d-4ed7-9f15-14b1f52c678a)
+
+```
+sns.catplot(data=df,col="Survived",x="Gender",hue="Pclass",kind="count")
+```
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/4f75e816-c891-4f7d-b499-c615781c6b15)
+
+```
+corr=df.corr()
+sns.heatmap(corr,annot=True)
+```
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/824aa31e-c281-41a9-a839-9a5ab78b90d0)
+
+```
+sns.pairplot(df)
+```
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/85698857-6e10-4a2c-932d-1f43fa72671e)
+
+![image](https://github.com/Vanitha-SM/EXNO2DS/assets/119557985/605ceb6d-007d-45f3-8c14-6de3d2ebe60d)
+
+# RESULT:
+Thus,Data Analyzing of the given dataset was successful.
+       
